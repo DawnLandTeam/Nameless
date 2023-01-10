@@ -26,6 +26,14 @@ class AvatarSource {
         return self::getActiveSource()->getAvatar($uuid, self::getDefaultPerspective(), $size);
     }
 
+    public static function getAvatarFromDawnLandSKin(string $username, int $size = 128): string {
+        return str_replace(
+            ['{identifier}', '{size}'],
+            [$username, $size],
+            'https://skin.dawnland.cn/avatar/player/{identifier}?size={size}'
+        );
+    }
+
     /**
      * Get a user's avatar from their raw data object.
      * Used by the API for TinyMCE mention avatars to avoid reloading the user from the database.
@@ -70,23 +78,9 @@ class AvatarSource {
 
         // Attempt to get their MC avatar if Minecraft integration is enabled
         if (defined('MINECRAFT') && MINECRAFT) {
-            if ($data->uuid != null && $data->uuid != 'none') {
-                $uuid = $data->uuid;
-            } else {
-                $uuid = $data->username;
-                // Fallback to steve avatar if they have an invalid username
-                if (preg_match('#[^][_A-Za-z0-9]#', $uuid)) {
-                    $uuid = 'Steve';
-                }
-            }
-
-            $url = self::getAvatarFromUUID($uuid, $size);
-            // The avatar might be invalid if they are using
-            // an MC avatar service that uses only UUIDs
-            // and this user doesn't have one
-            if (self::validImageUrl($url)) {
-                return $url;
-            }
+            $username = $data->username;
+            $url = self::getAvatarFromDawnLandSKin($username, $size);
+            return $url;
         }
 
         return "https://avatars.dicebear.com/api/initials/{$data->username}.png?size={$size}";

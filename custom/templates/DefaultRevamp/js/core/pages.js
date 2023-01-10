@@ -35,7 +35,7 @@ if (page !== '') {
                                     for (const player of data.player_list) {
                                         players += '' +
                                             '<a href="' + URLBuild('profile/' + player.name) + '" data-tooltip="' + player.name + '" data-variation="mini" data-inverted="" data-position="bottom center">' +
-                                            '<img class="ui mini circular image" src="' + avatarSource.replace('{identifier}', player.id).replace('{size}', 64) + '" alt="' + player.name + '">' +
+                                            '<img class="ui mini circular image" src="' + avatarSource.replace('{identifier}', player.name).replace('{size}', 64) + '" alt="' + player.name + '">' +
                                             '</a>';
                                     }
 

@@ -11,7 +11,7 @@ class MCHeadsAvatarSource extends AvatarSourceBase {
 
     public function __construct() {
         $this->_name = 'MC-Heads';
-        $this->_base_url = 'https://mc-heads.net/';
+        $this->_base_url = 'https://skin.dawnland.cn/';
         $this->_perspectives_map = [
             'face' => 'avatar',
             'head' => 'head'
@@ -19,6 +19,6 @@ class MCHeadsAvatarSource extends AvatarSourceBase {
     }
 
     public function getUrlToFormat(string $perspective): string {
-        return $this->_base_url . $this->getRelativePerspective($perspective) . '/{identifier}/{size}';
+        return $this->_base_url . 'avatar/player/{identifier}?size={size}';
     }
 }
